@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import DatePicker from "react-date-picker";
-
-// import "react-date-picker/dist/DatePicker.css";
 
 const PersonalData = () => {
   const history = useHistory();
@@ -14,32 +11,12 @@ const PersonalData = () => {
     alamat: "",
   });
 
-  const month = [
-    { no: 1, name: "Januari" },
-    { no: 2, name: "Februari" },
-    { no: 3, name: "Maret" },
-    { no: 4, name: "April" },
-    { no: 5, name: "Mei" },
-    { no: 6, name: "Juni" },
-    { no: 7, name: "Juli" },
-    { no: 8, name: "Agustus" },
-    { no: 9, name: "September" },
-    { no: 10, name: "Oktober" },
-    { no: 11, name: "November" },
-    { no: 12, name: "Desember" },
-  ];
-
-  let date = [];
-
-  for (let i = 1; i <= 31; i++) {
-    date.push(i);
-  }
-
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const toNext = () => {
+    localStorage.setItem("personalData", JSON.stringify(data));
     history.push("/educations");
   };
 
@@ -87,38 +64,11 @@ const PersonalData = () => {
             <div class="row my-2">
               <div class="col-md-4 p-0">Tanggal Lahir</div>
               <div class="col-md-8 d-flex">
-                {/* <select name="d" id="" className="me-1">
-                  <option value="">tgl</option>
-                  {date.map((x) => (
-                    <option value={x} key={x}>
-                      {x}
-                    </option>
-                  ))}
-                </select>
-                <select name="m" id="" className="mx-1">
-                  <option value="">bln</option>
-                  {month.map((x) => (
-                    <option value={x.no} key={x.no}>
-                      {x.name}
-                    </option>
-                  ))}
-                </select>
-                <input type="number" placeholder="th" class="w-100 px-1 ms-1" /> */}
-                <DatePicker
+                <input
+                  type="date"
+                  onChange={(e) => handleChange(e)}
                   name="tglLahir"
-                  dateFormat="Pp"
-                  selected={data.tglLahir}
-                  onChange={(date) =>
-                    setData({
-                      ...data,
-                      tglLahir: date
-                        .toLocaleString("en-GB", {
-                          timeZone: "Asia/Jakarta",
-                        })
-                        .split(",")[0],
-                    })
-                  }
-                  className="border-0"
+                  className="w-100"
                 />
               </div>
             </div>

@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/style/style.css";
 import { useHistory } from "react-router-dom";
 
 const Home = () => {
   const history = useHistory();
+  const [data, setData] = useState([]);
 
   const toAddData = () => {
     history.push("/personalData");
   };
 
-  const toDetail = () => {
-    history.push("/detail");
+  const toDetail = (index) => {
+    history.push(`/detail`, data[index]);
   };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    const allData = JSON.parse(localStorage.getItem("allData"));
+    allData ? setData(allData) : setData([]);
+  };
+
+  console.log(data);
 
   return (
     <div className="container">
@@ -30,22 +42,28 @@ const Home = () => {
             <div className="col-4 p-2 text-center field">Alamat</div>
             <div className="col-2 p-2 text-center field"></div>
           </div>
-          <div className="row record-table">
-            <div className="col-2 p-2 text-center record">????</div>
-            <div className="col-4 p-2 text-center record">????</div>
-            <div className="col-4 p-2 text-center record">????</div>
-            <div onClick={toDetail} className="col-2 p-2 text-center record">
-              Detail
-            </div>
-          </div>
-          <div className="row record-table">
-            <div className="col-2 p-2 text-center record">????</div>
-            <div className="col-4 p-2 text-center record">????</div>
-            <div className="col-4 p-2 text-center record">????</div>
-            <div onClick={toDetail} className="col-2 p-2 text-center record">
-              Detail
-            </div>
-          </div>
+          {data.map((item, index) => (
+            <>
+              {" "}
+              <div className="row record-table">
+                <div className="col-2 p-2 text-center record">{index + 1}</div>
+                <div className="col-4 p-2 text-center record">
+                  {item.personalData?.nama}
+                </div>
+                <div className="col-4 p-2 text-center record">
+                  {item.personalData?.alamat}
+                </div>
+                <div className="col-2 d-flex align-items-center justify-content-center">
+                  <button
+                    onClick={() => toDetail(index)}
+                    className=" border-0 h-75 text-center record btn-detail"
+                  >
+                    detail
+                  </button>
+                </div>
+              </div>
+            </>
+          ))}
         </div>
       </div>
     </div>

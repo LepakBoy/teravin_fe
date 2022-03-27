@@ -12,11 +12,15 @@ const RiwayatPendidikan = () => {
     },
   ]);
 
-  const handleChange = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const handleChange = (e, index) => {
+    let newData = [...data];
+    newData[index][e.target.name] = e.target.value;
+    console.log(newData);
+    setData(newData);
   };
 
   const toNext = () => {
+    localStorage.setItem("educations", JSON.stringify(data));
     history.push("/experience");
   };
 
@@ -31,7 +35,7 @@ const RiwayatPendidikan = () => {
         <header class="my-3 p-0">Form submission</header>
         <div class="progress-bar-area">progress bar</div>
         <div class="form-area mt-4 row p-2 w-100">
-          {data.map((item) => (
+          {data.map((item, index) => (
             <>
               <div class="col-md-6">
                 <div class="row my-2">
@@ -41,7 +45,7 @@ const RiwayatPendidikan = () => {
                       type="text"
                       class="w-100 px-1"
                       name="jenjang"
-                      onChange={(e) => handleChange(e)}
+                      onChange={(e) => handleChange(e, index)}
                     />
                   </div>
                 </div>
@@ -52,7 +56,7 @@ const RiwayatPendidikan = () => {
                       type="text"
                       class="w-100 px-1"
                       name="namaSekolah"
-                      onChange={(e) => handleChange(e)}
+                      onChange={(e) => handleChange(e, index)}
                     />
                   </div>
                 </div>
@@ -60,10 +64,10 @@ const RiwayatPendidikan = () => {
                   <div class="col-md-4 p-0">Tahun Masuk</div>
                   <div class="col-md-8">
                     <input
-                      type="text"
+                      type="number"
                       class="w-100 px-1"
                       name="masuk"
-                      onChange={(e) => handleChange(e)}
+                      onChange={(e) => handleChange(e, index)}
                     />
                   </div>
                 </div>
@@ -71,10 +75,10 @@ const RiwayatPendidikan = () => {
                   <div class="col-md-4 p-0">Tahun Lulus</div>
                   <div class="col-md-8">
                     <input
-                      type="text"
+                      type="number"
                       class="w-100 px-1"
                       name="lulus"
-                      onChange={(e) => handleChange(e)}
+                      onChange={(e) => handleChange(e, index)}
                     />
                   </div>
                 </div>

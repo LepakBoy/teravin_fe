@@ -28,6 +28,10 @@ a {
   font-weight: 600;
   background-color: #8f8e8e;
 }
+.btn-detail {
+  border-radius: 5px;
+  width: 72px;
+}
 .field {
   background-color: rgb(58, 61, 66, 0.1);
 }
@@ -50,4 +54,9 @@ textarea {
 }
 .skill-input {
   height: 32px;
+}
+
+.title-data {
+  font-size: 18px;
+  font-weight: 600;
 }

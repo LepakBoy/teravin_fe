@@ -10,8 +10,27 @@ const Keahlian = () => {
     setSkills([...skills, ""]);
   };
 
-  const toHome = () => {
+  const handleSubmit = () => {
+    const result = {
+      personalData: JSON.parse(localStorage.getItem("personalData")),
+      educations: JSON.parse(localStorage.getItem("educations")),
+      experience: JSON.parse(localStorage.getItem("experience")),
+      skills,
+    };
+
+    const allData = JSON.parse(localStorage.getItem("allData"));
+    const finall = allData ? [...allData, result] : [result];
+
+    localStorage.setItem("allData", JSON.stringify(finall));
+
     history.push("/");
+  };
+
+  const handleChange = (e, index) => {
+    let newData = [...skills];
+    newData[index] = e.target.value;
+    console.log(newData);
+    setSkills(newData);
   };
 
   console.log(skills);
@@ -23,11 +42,12 @@ const Keahlian = () => {
         <div className="progress-bar-area"></div>
         <div className="form-area mt-4 row p-2 w-100">
           <div className="col-md-12 my-3">
-            {skills.map((x) => (
+            {skills.map((x, index) => (
               <input
                 type="text"
                 className="w-100 px-1 skill-input mb-3"
                 placeholder="input skill"
+                onChange={(e) => handleChange(e, index)}
               />
             ))}
 
@@ -38,7 +58,7 @@ const Keahlian = () => {
         </div>
         <div className="button-area text-end">
           <button
-            onClick={toHome}
+            onClick={handleSubmit}
             className="border-0 px-3 py-1 btn-pr text-white"
           >
             <span>Submit</span>
