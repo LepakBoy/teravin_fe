@@ -29,11 +29,8 @@ const Keahlian = () => {
   const handleChange = (e, index) => {
     let newData = [...skills];
     newData[index] = e.target.value;
-    console.log(newData);
     setSkills(newData);
   };
-
-  console.log(skills);
 
   return (
     <div className="container">
@@ -57,6 +54,12 @@ const Keahlian = () => {
           </div>
         </div>
         <div className="button-area text-end">
+          <button
+            onClick={history.goBack}
+            className="border-0 px-3 py-1 btn-sec text-white me-2"
+          >
+            <span>Back</span>
+          </button>
           <button
             onClick={handleSubmit}
             className="border-0 px-3 py-1 btn-pr text-white"

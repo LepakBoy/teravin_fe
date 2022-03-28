@@ -23,8 +23,6 @@ const Home = () => {
     allData ? setData(allData) : setData([]);
   };
 
-  console.log(data);
-
   return (
     <div className="container">
       <div className="row col-md-9 mx-auto p-3 wrapper-outer">

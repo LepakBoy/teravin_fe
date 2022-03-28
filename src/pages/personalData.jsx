@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
+import Content from "../components/inputs";
+import FormLable from "../components/formLable";
 
 const PersonalData = () => {
   const history = useHistory();
@@ -11,75 +13,53 @@ const PersonalData = () => {
     alamat: "",
   });
 
+  const [focus, setFocus] = useState(false);
+
+  const handleFocus = (e) => {
+    setFocus(true);
+  };
+
   const handleChange = (e) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 
   const toNext = () => {
+    for (const i in data) {
+      if (data[i] === "") {
+        alert("Please filled blank input");
+        return;
+      }
+    }
     localStorage.setItem("personalData", JSON.stringify(data));
     history.push("/educations");
   };
 
-  console.log(data);
   return (
-    <div class="container">
-      <div class="row col-md-10 mx-auto p-3 wrapper-outer">
-        <header class="my-3 p-0">Form submission</header>
-        <div class="progress-bar-area">progress bar</div>
-        <div class="form-area mt-4 row p-2 w-100">
-          <div class="col-md-6">
-            <div class="row my-2">
-              <div class="col-md-4 p-0">Nama Lengkap</div>
-              <div class="col-md-8">
-                <input
-                  type="text"
-                  class="w-100 px-1"
-                  name="nama"
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-            </div>
-            <div class="row my-2">
-              <div class="col-md-4 p-0">Email</div>
-              <div class="col-md-8">
-                <input
-                  type="text"
-                  class="w-100 px-1"
-                  name="email"
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-            </div>
-            <div class="row my-2">
-              <div class="col-md-4 p-0">Tempat lahir</div>
-              <div class="col-md-8">
-                <input
-                  type="text"
-                  class="w-100 px-1"
-                  name="tempatLahir"
-                  onChange={(e) => handleChange(e)}
-                />
-              </div>
-            </div>
-            <div class="row my-2">
-              <div class="col-md-4 p-0">Tanggal Lahir</div>
-              <div class="col-md-8 d-flex">
-                <input
-                  type="date"
-                  onChange={(e) => handleChange(e)}
-                  name="tglLahir"
-                  className="w-100"
-                />
-              </div>
-            </div>
+    <div className="container">
+      <div className="row col-md-10 mx-auto p-3 wrapper-outer">
+        <header className="my-3 p-0">Form submission</header>
+        <div className="progress-bar-area">progress bar</div>
+        <div className="form-area mt-4 row p-2 w-100">
+          <div className="col-md-6">
+            {Content.inputsPersonalData.map((item) => (
+              <FormLable
+                label={item.label}
+                name={item.name}
+                type={item.type}
+                onChange={(e) => handleChange(e)}
+                error={item.error}
+              />
+            ))}
           </div>
-          <div class="col-md-6">
-            <div class="row my-2">
-              <div class="col-md-2 p-0">Alamat</div>
-              <div class="col-md-10">
+          <div className="col-md-6">
+            <div className="row my-2">
+              <div className="col-md-2 p-0">Alamat</div>
+              <div className="col-md-10">
                 <textarea
+                  onBlur={handleFocus}
+                  focused={focus.toString()}
                   placeholder="write address here"
-                  class="w-100"
+                  className="w-100 error-input"
                   name="alamat"
                   id=""
                   cols="30"
@@ -90,16 +70,16 @@ const PersonalData = () => {
             </div>
           </div>
         </div>
-        <div class="button-area text-end">
+        <div className="button-area text-end">
           <button
             onClick={history.goBack}
-            class="border-0 px-3 py-1 btn-sec text-white me-2"
+            className="border-0 px-3 py-1 btn-sec text-white me-2"
           >
             <span>Back</span>
           </button>
           <button
             onClick={toNext}
-            class="border-0 px-3 py-1 btn-pr text-white ms-2"
+            className="border-0 px-3 py-1 btn-pr text-white ms-2"
           >
             <span>Next</span>
           </button>
